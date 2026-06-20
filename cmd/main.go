@@ -3,12 +3,12 @@ package main
 import (
 	"context"
 
-	config "github.com/CocaineCong/todolist-ddd/conf"
-	"github.com/CocaineCong/todolist-ddd/infrastructure/common/log"
-	"github.com/CocaineCong/todolist-ddd/infrastructure/container"
-	"github.com/CocaineCong/todolist-ddd/infrastructure/eventbus"
-	"github.com/CocaineCong/todolist-ddd/infrastructure/persistence/dbs"
-	"github.com/CocaineCong/todolist-ddd/interfaces/adapter/initialize"
+	config "github.com/Y1le/godolist/conf"
+	"github.com/Y1le/godolist/infrastructure/common/log"
+	"github.com/Y1le/godolist/infrastructure/container"
+	"github.com/Y1le/godolist/infrastructure/eventbus"
+	"github.com/Y1le/godolist/infrastructure/persistence/dbs"
+	"github.com/Y1le/godolist/interfaces/adapter/initialize"
 )
 
 func main() {

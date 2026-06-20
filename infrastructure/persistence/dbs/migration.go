@@ -1,9 +1,9 @@
 package dbs
 
 import (
-	"github.com/CocaineCong/todolist-ddd/infrastructure/persistence/outbox"
-	"github.com/CocaineCong/todolist-ddd/infrastructure/persistence/task"
-	"github.com/CocaineCong/todolist-ddd/infrastructure/persistence/user"
+	"github.com/Y1le/godolist/infrastructure/persistence/outbox"
+	"github.com/Y1le/godolist/infrastructure/persistence/task"
+	"github.com/Y1le/godolist/infrastructure/persistence/user"
 )
 
 func migration() {

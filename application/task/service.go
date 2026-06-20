@@ -5,10 +5,10 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/CocaineCong/todolist-ddd/domain/task/entity"
-	"github.com/CocaineCong/todolist-ddd/domain/task/service"
-	ctl "github.com/CocaineCong/todolist-ddd/infrastructure/common/context"
-	"github.com/CocaineCong/todolist-ddd/interfaces/types"
+	"github.com/Y1le/godolist/domain/task/entity"
+	"github.com/Y1le/godolist/domain/task/service"
+	ctl "github.com/Y1le/godolist/infrastructure/common/context"
+	"github.com/Y1le/godolist/interfaces/types"
 )
 
 type Service interface {
@@ -37,7 +37,7 @@ func GetServiceImpl(srv service.TaskDomain) *ServiceImpl {
 }
 
 func (s *ServiceImpl) CreateTask(ctx context.Context, req *types.CreateTaskReq) (*entity.Task, error) {
-	// 获取用户信息
+	// 鑾峰彇鐢ㄦ埛淇℃伅
 	userInfo, err := ctl.GetUserInfo(ctx)
 	if err != nil {
 		return nil, err

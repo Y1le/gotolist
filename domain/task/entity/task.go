@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/CocaineCong/todolist-ddd/consts"
+	"github.com/Y1le/godolist/consts"
 )
 
 type Task struct {
