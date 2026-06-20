@@ -1,4 +1,4 @@
-module github.com/CocaineCong/todolist-ddd
+module github.com/Y1le/gotolist
 
 go 1.24.2
 
@@ -53,3 +53,4 @@ require (
 	google.golang.org/protobuf v1.36.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+

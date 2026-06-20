@@ -3,8 +3,8 @@ package task
 import (
 	"time"
 
-	"github.com/CocaineCong/todolist-ddd/domain/task/entity"
-	"github.com/CocaineCong/todolist-ddd/interfaces/types"
+	"github.com/Y1le/gotolist/domain/task/entity"
+	"github.com/Y1le/gotolist/interfaces/types"
 )
 
 func ListResponse(list []*entity.Task, count int64) types.List[*entity.Task] {

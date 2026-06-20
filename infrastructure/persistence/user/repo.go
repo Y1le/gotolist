@@ -6,8 +6,8 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/CocaineCong/todolist-ddd/domain/user/entity"
-	"github.com/CocaineCong/todolist-ddd/domain/user/repository"
+	"github.com/Y1le/gotolist/domain/user/entity"
+	"github.com/Y1le/gotolist/domain/user/repository"
 )
 
 type RepositoryImpl struct {
