@@ -18,27 +18,35 @@ func NewRepository(db *gorm.DB) repository.User {
 	return &RepositoryImpl{db: db}
 }
 
-func (r *RepositoryImpl) CreateUser(ctx context.Context, user *entity.User) (*entity.User, error) {
+// withDB picks a connection: a passed-in tx if non-nil, else the global pool.
+func (r *RepositoryImpl) withDB(tx *gorm.DB) *gorm.DB {
+	if tx != nil {
+		return tx
+	}
+	return r.db
+}
+
+func (r *RepositoryImpl) CreateUser(ctx context.Context, tx *gorm.DB, user *entity.User) (*entity.User, error) {
 	u := Entity2PO(user)
-	err := r.db.WithContext(ctx).Model(&User{}).Create(u).Error
+	err := r.withDB(tx).WithContext(ctx).Model(&User{}).Create(u).Error
 	if err != nil {
 		return nil, err
 	}
 	return PO2Entity(u), nil
 }
 
-func (r *RepositoryImpl) GetUserByName(ctx context.Context, username string) (*entity.User, error) {
+func (r *RepositoryImpl) GetUserByName(ctx context.Context, tx *gorm.DB, username string) (*entity.User, error) {
 	var u *User
-	err := r.db.WithContext(ctx).Model(&User{}).Where("user_name = ?", username).Find(&u).Error
+	err := r.withDB(tx).WithContext(ctx).Model(&User{}).Where("user_name = ?", username).Find(&u).Error
 	if err != nil {
 		return nil, err
 	}
 	return PO2Entity(u), nil
 }
 
-func (r *RepositoryImpl) GetUserByID(ctx context.Context, id uint) (*entity.User, error) {
+func (r *RepositoryImpl) GetUserByID(ctx context.Context, tx *gorm.DB, id uint) (*entity.User, error) {
 	var u *User
-	err := r.db.WithContext(ctx).Model(&User{}).Where("id = ?", id).Find(&u).Error
+	err := r.withDB(tx).WithContext(ctx).Model(&User{}).Where("id = ?", id).Find(&u).Error
 	if err != nil {
 		return nil, err
 	}
