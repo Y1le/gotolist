@@ -1,8 +1,8 @@
 package user
 
 import (
-	"github.com/Y1le/godolist/domain/user/entity"
-	"github.com/Y1le/godolist/interfaces/types"
+	"github.com/CocaineCong/todolist-ddd/domain/user/entity"
+	"github.com/CocaineCong/todolist-ddd/interfaces/types"
 )
 
 func LoginResponse(u *entity.User, token string) *types.TokenData {

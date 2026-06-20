@@ -6,12 +6,12 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/Y1le/godolist/consts"
-	"github.com/Y1le/godolist/infrastructure/auth"
-	lctx "github.com/Y1le/godolist/infrastructure/common/context"
+	"github.com/CocaineCong/todolist-ddd/consts"
+	"github.com/CocaineCong/todolist-ddd/infrastructure/auth"
+	lctx "github.com/CocaineCong/todolist-ddd/infrastructure/common/context"
 )
 
-// JWT token楠岃瘉涓棿浠?
+// JWT token验证中间件
 func JWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var code int
@@ -22,7 +22,7 @@ func JWT() gin.HandlerFunc {
 			c.JSON(consts.InvalidParams, gin.H{
 				"status": code,
 				"msg":    consts.GetMsg(code),
-				"data":   "缂哄皯Token",
+				"data":   "缺少Token",
 			})
 			c.Abort()
 			return
@@ -39,7 +39,7 @@ func JWT() gin.HandlerFunc {
 			c.JSON(consts.InvalidParams, gin.H{
 				"status": code,
 				"msg":    consts.GetMsg(code),
-				"data":   "鍙兘鏄韩浠借繃鏈熶簡锛岃閲嶆柊鐧诲綍",
+				"data":   "可能是身份过期了，请重新登录",
 			})
 			c.Abort()
 			return

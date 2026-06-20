@@ -1,10 +1,10 @@
 package types
 
 import (
-	"github.com/Y1le/godolist/consts"
+	"github.com/CocaineCong/todolist-ddd/consts"
 )
 
-// Response 鍩虹搴忓垪鍖栧櫒
+// Response 基础序列化器
 type Response struct {
 	Status  int         `json:"status"`
 	Data    interface{} `json:"data"`
@@ -13,20 +13,20 @@ type Response struct {
 	TrackId string      `json:"track_id"`
 }
 
-// DataList 甯︽湁鎬绘暟鐨凞ata缁撴瀯
+// DataList 带有总数的Data结构
 type DataList struct {
 	Item  interface{} `json:"item"`
 	Total int64       `json:"total"`
 }
 
-// // TokenData 甯︽湁token鐨凞ata缁撴瀯
+// // TokenData 带有token的Data结构
 // type TokenData struct {
 // 	User         interface{} `json:"user"`
 // 	AccessToken  string      `json:"access_token"`
 // 	RefreshToken string      `json:"refresh_token"`
 // }
 
-// RespList 甯︽湁鎬绘暟鐨勫垪琛ㄦ瀯寤哄櫒
+// RespList 带有总数的列表构建器
 func RespList(items interface{}, total int64) Response {
 	return Response{
 		Status: 200,
@@ -38,7 +38,7 @@ func RespList(items interface{}, total int64) Response {
 	}
 }
 
-// RespSuccess 鎴愬姛杩斿洖
+// RespSuccess 成功返回
 func RespSuccess(code ...int) *Response {
 	status := consts.SUCCESS
 	if code != nil {
@@ -47,14 +47,14 @@ func RespSuccess(code ...int) *Response {
 
 	r := &Response{
 		Status: status,
-		Data:   "鎿嶄綔鎴愬姛",
+		Data:   "操作成功",
 		Msg:    consts.GetMsg(status),
 	}
 
 	return r
 }
 
-// RespSuccessWithData 甯ata鎴愬姛杩斿洖
+// RespSuccessWithData 带data成功返回
 func RespSuccessWithData(data interface{}, code ...int) *Response {
 	status := consts.SUCCESS
 	if code != nil {
@@ -70,7 +70,7 @@ func RespSuccessWithData(data interface{}, code ...int) *Response {
 	return r
 }
 
-// RespError 閿欒杩斿洖
+// RespError 错误返回
 func RespError(err error, data string, code ...int) *Response {
 	status := consts.ERROR
 	if code != nil {

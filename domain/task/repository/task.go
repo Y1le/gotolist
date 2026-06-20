@@ -5,8 +5,8 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/Y1le/godolist/domain/task/entity"
-	"github.com/Y1le/godolist/interfaces/types"
+	"github.com/CocaineCong/todolist-ddd/domain/task/entity"
+	"github.com/CocaineCong/todolist-ddd/interfaces/types"
 )
 
 type Task interface {

@@ -5,7 +5,7 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/Y1le/godolist/domain/user/entity"
+	"github.com/CocaineCong/todolist-ddd/domain/user/entity"
 )
 
 type User interface {

@@ -7,10 +7,10 @@ import (
 
 	"gorm.io/gorm"
 
-	userevent "github.com/Y1le/godolist/domain/user/event"
-	"github.com/Y1le/godolist/domain/user/entity"
-	"github.com/Y1le/godolist/domain/user/repository"
-	"github.com/Y1le/godolist/infrastructure/persistence/outbox"
+	userevent "github.com/CocaineCong/todolist-ddd/domain/user/event"
+	"github.com/CocaineCong/todolist-ddd/domain/user/entity"
+	"github.com/CocaineCong/todolist-ddd/domain/user/repository"
+	"github.com/CocaineCong/todolist-ddd/infrastructure/persistence/outbox"
 )
 
 type UserDomain interface {

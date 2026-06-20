@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/Y1le/godolist/domain/user/entity"
+	"github.com/CocaineCong/todolist-ddd/domain/user/entity"
 )
 
 func Entity2PO(user *entity.User) *User {

@@ -10,8 +10,8 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/Y1le/godolist/domain/event"
-	"github.com/Y1le/godolist/infrastructure/persistence/outbox"
+	"github.com/CocaineCong/todolist-ddd/domain/event"
+	"github.com/CocaineCong/todolist-ddd/infrastructure/persistence/outbox"
 )
 
 type InProcBus struct {

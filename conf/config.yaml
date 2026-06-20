@@ -1,7 +1,7 @@
-service:
+﻿service:
   port: :3001
   version: 1.0
-  jwtSecret: "godolist-secret"
+  jwtSecret: "todolist-dddd"
 
 mysql:
   driverName: mysql

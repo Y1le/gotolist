@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "godolist-hydro-2026",
-		"name": "godolist",
-		"description": "Y1le/godolist - all 9 endpoints",
+		"_postman_id": "todolist-ddd-hydro-2026",
+		"name": "todolist-ddd",
+		"description": "CocaineCong/todolist-ddd - all 9 endpoints",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [

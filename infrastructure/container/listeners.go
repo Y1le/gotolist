@@ -1,9 +1,9 @@
 package container
 
 import (
-	"github.com/Y1le/godolist/domain/event"
-	"github.com/Y1le/godolist/domain/task/service"
-	"github.com/Y1le/godolist/infrastructure/eventbus"
+	"github.com/CocaineCong/todolist-ddd/domain/event"
+	"github.com/CocaineCong/todolist-ddd/domain/task/service"
+	"github.com/CocaineCong/todolist-ddd/infrastructure/eventbus"
 )
 
 func registerListeners(bus *eventbus.InProcBus, taskDomain service.TaskDomain) {

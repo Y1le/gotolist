@@ -3,7 +3,7 @@ package entity
 import (
 	"time"
 
-	"github.com/Y1le/godolist/consts"
+	"github.com/CocaineCong/todolist-ddd/consts"
 )
 
 type User struct {

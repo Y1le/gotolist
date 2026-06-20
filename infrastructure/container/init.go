@@ -1,19 +1,19 @@
-package container
+﻿package container
 
 import (
-	"github.com/Y1le/godolist/domain/event"
-	taskSrv "github.com/Y1le/godolist/domain/task/service"
-	userevent "github.com/Y1le/godolist/domain/user/event"
-	userSrv "github.com/Y1le/godolist/domain/user/service"
-	"github.com/Y1le/godolist/infrastructure/auth"
-	"github.com/Y1le/godolist/infrastructure/encrypt"
-	"github.com/Y1le/godolist/infrastructure/eventbus"
-	"github.com/Y1le/godolist/infrastructure/persistence"
-	"github.com/Y1le/godolist/infrastructure/persistence/dbs"
-	"github.com/Y1le/godolist/infrastructure/persistence/outbox"
+	"github.com/CocaineCong/todolist-ddd/domain/event"
+	taskSrv "github.com/CocaineCong/todolist-ddd/domain/task/service"
+	userevent "github.com/CocaineCong/todolist-ddd/domain/user/event"
+	userSrv "github.com/CocaineCong/todolist-ddd/domain/user/service"
+	"github.com/CocaineCong/todolist-ddd/infrastructure/auth"
+	"github.com/CocaineCong/todolist-ddd/infrastructure/encrypt"
+	"github.com/CocaineCong/todolist-ddd/infrastructure/eventbus"
+	"github.com/CocaineCong/todolist-ddd/infrastructure/persistence"
+	"github.com/CocaineCong/todolist-ddd/infrastructure/persistence/dbs"
+	"github.com/CocaineCong/todolist-ddd/infrastructure/persistence/outbox"
 
-	taskApp "github.com/Y1le/godolist/application/task"
-	userApp "github.com/Y1le/godolist/application/user"
+	taskApp "github.com/CocaineCong/todolist-ddd/application/task"
+	userApp "github.com/CocaineCong/todolist-ddd/application/user"
 )
 
 func LoadingDomain(bus *eventbus.InProcBus) {

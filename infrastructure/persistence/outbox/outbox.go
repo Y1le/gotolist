@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 
-	"github.com/Y1le/godolist/domain/event"
+	"github.com/CocaineCong/todolist-ddd/domain/event"
 )
 
 type OutboxPO struct {
