@@ -5,10 +5,8 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/CocaineCong/todolist-ddd/consts"
 	"github.com/CocaineCong/todolist-ddd/domain/task/entity"
 	"github.com/CocaineCong/todolist-ddd/domain/task/repository"
-	"github.com/CocaineCong/todolist-ddd/infrastructure/persistence/user"
 	"github.com/CocaineCong/todolist-ddd/interfaces/types"
 )
 
@@ -17,69 +15,67 @@ type RepositoryImpl struct {
 }
 
 func NewRepository(db *gorm.DB) repository.Task {
-	return &RepositoryImpl{
-		db: db,
-	}
+	return &RepositoryImpl{db: db}
 }
 
+func (r *RepositoryImpl) withDB(tx *gorm.DB) *gorm.DB {
+	if tx != nil {
+		return tx
+	}
+	return r.db
+}
+
+// Paginate returns a GORM scope that applies LIMIT/OFFSET with safe
+// defaults when the caller did not provide a page size.
 func Paginate(p types.Pagination) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
-		if p.Page <= 0 {
-			p.Page = consts.DefaultPage // 默认第一页
+		page := p.Page
+		if page < 1 {
+			page = 1
 		}
-		switch {
-		case p.PageSize > consts.DefaultPageSizeMax:
-			p.PageSize = consts.DefaultPageSizeMax // 限制最大页数
-		case p.PageSize <= 0:
-			p.PageSize = consts.DefaultPageSize // 默认每页10条
+		size := p.PageSize
+		if size < 1 {
+			size = 10
 		}
-		offset := (p.Page - 1) * p.PageSize
-		return db.Offset(offset).Limit(p.PageSize)
+		offset := (page - 1) * size
+		return db.Offset(offset).Limit(size)
 	}
 }
 
-func (r *RepositoryImpl) CreateTask(ctx context.Context, in *entity.Task) (*entity.Task, error) {
-	task := Entity2PO(in)
-	db := r.db.WithContext(ctx)
-	err := db.Model(&Task{}).Create(&task).Error
-	if err != nil {
+func (r *RepositoryImpl) CreateTask(ctx context.Context, tx *gorm.DB, in *entity.Task) (*entity.Task, error) {
+	po := Entity2PO(in)
+	db := r.withDB(tx).WithContext(ctx)
+	if err := db.Model(&Task{}).Create(&po).Error; err != nil {
 		return nil, err
 	}
-	var u *user.User
-	err = db.Model(&user.User{}).Where("id = ?", task.Uid).Find(&u).Error
-	if err != nil {
-		return nil, err
-	}
-	return PO2Entity(task, u), nil
+	return PO2Entity(po), nil
 }
 
-func (r *RepositoryImpl) FindTaskByTid(ctx context.Context, taskId, userId uint) (*entity.Task, error) {
+func (r *RepositoryImpl) FindTaskByTid(ctx context.Context, tx *gorm.DB, taskId, userId uint) (*entity.Task, error) {
 	task := &entity.Task{}
-	err := r.db.WithContext(ctx).Model(&Task{}).
-		Joins("AS task LEFT JOIN user AS u ON task.uid = u.id").
-		Where("task.id = ? AND u.id = ? ", taskId, userId).
-		Select("u.id AS uid, u.user_name, task.*").Find(&task).Error
+	err := r.withDB(tx).WithContext(ctx).Model(&Task{}).
+		Where("id = ? AND uid = ?", taskId, userId).
+		Find(&task).Error
 	if err != nil {
 		return nil, err
 	}
 	return task, nil
 }
 
-func (r *RepositoryImpl) ListTaskByUid(ctx context.Context, uid uint, p types.Pagination) ([]*entity.Task, int64, error) {
+func (r *RepositoryImpl) ListTaskByUid(ctx context.Context, tx *gorm.DB, uid uint, p types.Pagination) ([]*entity.Task, int64, error) {
 	var tasks []*entity.Task
 	var count int64
-	err := r.db.WithContext(ctx).Model(&Task{}).
-		Joins("AS task LEFT JOIN user AS u ON task.uid = u.id").
-		Where("u.id = ?", uid).Count(&count).
-		Scopes(Paginate(p)).
-		Select("u.id AS uid, u.user_name, task.*").Find(&tasks).Error
-	if err != nil {
+	db := r.withDB(tx).WithContext(ctx).Model(&Task{}).Where("uid = ?", uid)
+	if err := db.Count(&count).Error; err != nil {
+		return nil, count, err
+	}
+	if err := db.Scopes(Paginate(p)).Find(&tasks).Error; err != nil {
 		return nil, count, err
 	}
 	return tasks, count, nil
 }
 
-func (r *RepositoryImpl) UpdateTask(ctx context.Context, task *entity.Task) error {
+func (r *RepositoryImpl) UpdateTask(ctx context.Context, tx *gorm.DB, task *entity.Task) error {
 	update := make(map[string]any)
 	if task.Content != "" {
 		update["content"] = task.Content
@@ -90,37 +86,37 @@ func (r *RepositoryImpl) UpdateTask(ctx context.Context, task *entity.Task) erro
 	if task.Title != "" {
 		update["title"] = task.Title
 	}
-	err := r.db.WithContext(ctx).Model(&Task{}).
-		Where("id = ? AND uid = ?", task.Id, task.Uid).
-		Updates(&update).Error
-	if err != nil {
-		return err
+	if len(update) == 0 {
+		return nil
 	}
-	return nil
+	return r.withDB(tx).WithContext(ctx).Model(&Task{}).
+		Where("id = ? AND uid = ?", task.Id, task.Uid).
+		Updates(update).Error
 }
 
-func (r *RepositoryImpl) SearchTask(ctx context.Context, uid uint, keyword string, p types.Pagination) ([]*entity.Task, int64, error) {
+func (r *RepositoryImpl) SearchTask(ctx context.Context, tx *gorm.DB, uid uint, keyword string, p types.Pagination) ([]*entity.Task, int64, error) {
 	var tasks []*entity.Task
 	var count int64
-	err := r.db.WithContext(ctx).Model(&Task{}).
+	db := r.withDB(tx).WithContext(ctx).Model(&Task{}).
 		Where("uid = ?", uid).
-		Where("title LIKE ? OR content LIKE ?", "%"+keyword+"%", "%"+keyword+"%").
-		Count(&count).
-		Scopes(Paginate(p)).
-		Select("id, uid, title, status, content, start_time, end_time").
-		Find(&tasks).Error
-	if err != nil {
+		Where("title LIKE ? OR content LIKE ?", "%"+keyword+"%", "%"+keyword+"%")
+	if err := db.Count(&count).Error; err != nil {
+		return nil, count, err
+	}
+	if err := db.Scopes(Paginate(p)).Find(&tasks).Error; err != nil {
 		return nil, count, err
 	}
 	return tasks, count, nil
 }
 
-func (r *RepositoryImpl) DeleteTask(ctx context.Context, uid, tid uint) error {
-	err := r.db.WithContext(ctx).Model(&Task{}).
+func (r *RepositoryImpl) DeleteTask(ctx context.Context, tx *gorm.DB, uid, tid uint) error {
+	return r.withDB(tx).WithContext(ctx).Model(&Task{}).
 		Where("id = ? AND uid = ?", tid, uid).
 		Delete(&Task{}).Error
-	if err != nil {
-		return err
-	}
-	return nil
+}
+
+func (r *RepositoryImpl) BumpUserName(ctx context.Context, tx *gorm.DB, uid uint, newName string) error {
+	return r.withDB(tx).WithContext(ctx).Model(&Task{}).
+		Where("uid = ?", uid).
+		Update("user_name", newName).Error
 }

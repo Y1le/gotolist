@@ -2,12 +2,12 @@ package task
 
 import (
 	"github.com/CocaineCong/todolist-ddd/domain/task/entity"
-	"github.com/CocaineCong/todolist-ddd/infrastructure/persistence/user"
 )
 
 func Entity2PO(task *entity.Task) *Task {
 	return &Task{
 		Uid:       task.Uid,
+		UserName:  task.UserName,
 		Title:     task.Title,
 		Status:    task.Status,
 		Content:   task.Content,
@@ -16,10 +16,14 @@ func Entity2PO(task *entity.Task) *Task {
 	}
 }
 
-func PO2Entity(t *Task, u *user.User) *entity.Task {
+// PO2Entity no longer takes a *user.User. user_name is read from the
+// task row itself; the task BC keeps its own copy and refreshes it
+// via the user.renamed event listener.
+func PO2Entity(t *Task) *entity.Task {
 	return &entity.Task{
+		Id:        t.ID,
 		Uid:       t.Uid,
-		UserName:  u.UserName,
+		UserName:  t.UserName,
 		Title:     t.Title,
 		Status:    t.Status,
 		Content:   t.Content,
