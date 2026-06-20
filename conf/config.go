@@ -1,4 +1,4 @@
-package config
+﻿package config
 
 import (
 	"os"
@@ -9,34 +9,34 @@ import (
 var Conf *Config
 
 type Config struct {
-	Server *Server `yaml:"service"`
-	MySQL  *MySQL  `yaml:"mysql"`
-	Redis  *Redis  `yaml:"redis"`
+	Server *Server `mapstructure:"service" yaml:"service"`
+	MySQL  *MySQL  `mapstructure:"mysql" yaml:"mysql"`
+	Redis  *Redis  `mapstructure:"redis" yaml:"redis"`
 }
 
 type Server struct {
-	Port      string `yaml:"port"`
-	Version   string `yaml:"version"`
-	JwtSecret string `yaml:"jwtSecret"`
-	Metrics   string `yaml:"metrics"`
+	Port      string `mapstructure:"port" yaml:"port"`
+	Version   string `mapstructure:"version" yaml:"version"`
+	JwtSecret string `mapstructure:"jwtSecret" yaml:"jwtSecret"`
+	Metrics   string `mapstructure:"metrics" yaml:"metrics"`
 }
 
 type MySQL struct {
-	DriverName string `yaml:"driverName"`
-	Host       string `yaml:"host"`
-	Port       string `yaml:"port"`
-	Database   string `yaml:"database"`
-	UserName   string `yaml:"username"`
-	Password   string `yaml:"password"`
-	Charset    string `yaml:"charset"`
+	DriverName string `mapstructure:"driverName" yaml:"driverName"`
+	Host       string `mapstructure:"host" yaml:"host"`
+	Port       string `mapstructure:"port" yaml:"port"`
+	Database   string `mapstructure:"database" yaml:"database"`
+	UserName   string `mapstructure:"username" yaml:"username"`
+	Password   string `mapstructure:"password" yaml:"password"`
+	Charset    string `mapstructure:"charset" yaml:"charset"`
 }
 
 type Redis struct {
-	RedisHost     string `yaml:"redisHost"`
-	RedisPort     string `yaml:"redisPort"`
-	RedisUsername string `yaml:"redisUsername"`
-	RedisPassword string `yaml:"redisPassword"`
-	RedisDbName   int    `yaml:"redisDbName"`
+	RedisHost     string `mapstructure:"redisHost" yaml:"redisHost"`
+	RedisPort     string `mapstructure:"redisPort" yaml:"redisPort"`
+	RedisUsername string `mapstructure:"redisUsername" yaml:"redisUsername"`
+	RedisPassword string `mapstructure:"redisPassword" yaml:"redisPassword"`
+	RedisDbName   int    `mapstructure:"redisDbName" yaml:"redisDbName"`
 }
 
 func InitConfig() {

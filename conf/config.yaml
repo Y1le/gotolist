@@ -1,4 +1,4 @@
-server:
+﻿service:
   port: :3001
   version: 1.0
   jwtSecret: "todolist-dddd"
@@ -9,13 +9,12 @@ mysql:
   port: 3306
   database: todolist
   username: todolist
-  password: todolist
+  password: hydro123456
   charset: utf8mb4
 
 redis:
   redisDbName: 4
   redisHost: 127.0.0.1
   redisPort: 6379
-  redisPassword: 123456
+  redisPassword: hydro123456
   redisNetwork: "tcp"
-
