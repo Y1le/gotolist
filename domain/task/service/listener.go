@@ -1,0 +1,21 @@
+package service
+
+import (
+	"context"
+	"log"
+
+	"github.com/CocaineCong/todolist-ddd/domain/event"
+	userevent "github.com/CocaineCong/todolist-ddd/domain/user/event"
+)
+
+func (t *TaskDomainImpl) OnUserRenamed(ctx context.Context, e event.Event) error {
+	renamed, ok := e.(*userevent.UserRenamed)
+	if !ok {
+		return nil
+	}
+	if err := t.repo.BumpUserName(ctx, nil, renamed.UserID, renamed.NewUsername); err != nil {
+		log.Printf("[task] BumpUserName failed: %v", err)
+		return err
+	}
+	return nil
+}
