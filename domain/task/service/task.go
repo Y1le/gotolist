@@ -1,15 +1,15 @@
-﻿package service
+package service
 
 import (
 	"context"
 
 	"gorm.io/gorm"
 
-	"github.com/CocaineCong/todolist-ddd/domain/event"
-	"github.com/CocaineCong/todolist-ddd/domain/task/entity"
-	"github.com/CocaineCong/todolist-ddd/domain/task/repository"
-	"github.com/CocaineCong/todolist-ddd/infrastructure/persistence/outbox"
-	"github.com/CocaineCong/todolist-ddd/interfaces/types"
+	"github.com/Y1le/gotolist/domain/event"
+	"github.com/Y1le/gotolist/domain/task/entity"
+	"github.com/Y1le/gotolist/domain/task/repository"
+	"github.com/Y1le/gotolist/infrastructure/persistence/outbox"
+	"github.com/Y1le/gotolist/interfaces/types"
 )
 
 type UserContextProvider interface {

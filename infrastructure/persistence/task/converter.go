@@ -1,7 +1,7 @@
 package task
 
 import (
-	"github.com/CocaineCong/todolist-ddd/domain/task/entity"
+	"github.com/Y1le/gotolist/domain/task/entity"
 )
 
 func Entity2PO(task *entity.Task) *Task {

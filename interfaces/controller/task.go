@@ -5,9 +5,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/CocaineCong/todolist-ddd/application/task"
-	"github.com/CocaineCong/todolist-ddd/infrastructure/common/log"
-	"github.com/CocaineCong/todolist-ddd/interfaces/types"
+	"github.com/Y1le/gotolist/application/task"
+	"github.com/Y1le/gotolist/infrastructure/common/log"
+	"github.com/Y1le/gotolist/interfaces/types"
 )
 
 func CreateTaskHandler() gin.HandlerFunc {

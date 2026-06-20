@@ -5,10 +5,10 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/CocaineCong/todolist-ddd/domain/user/entity"
-	"github.com/CocaineCong/todolist-ddd/domain/user/service"
-	"github.com/CocaineCong/todolist-ddd/infrastructure/auth"
-	"github.com/CocaineCong/todolist-ddd/interfaces/types"
+	"github.com/Y1le/gotolist/domain/user/entity"
+	"github.com/Y1le/gotolist/domain/user/service"
+	"github.com/Y1le/gotolist/infrastructure/auth"
+	"github.com/Y1le/gotolist/interfaces/types"
 )
 
 type Service interface {
@@ -19,7 +19,7 @@ type Service interface {
 
 type ServiceImpl struct {
 	ud           service.UserDomain
-	tokenService auth.TokenService // 依赖抽象接口
+	tokenService auth.TokenService // 渚濊禆鎶借薄鎺ュ彛
 }
 
 var (
@@ -37,7 +37,7 @@ func GetServiceImpl(srv service.UserDomain, jwt auth.TokenService) *ServiceImpl 
 	return ServiceImplIns
 }
 
-// Register 用户注册
+// Register 鐢ㄦ埛娉ㄥ唽
 func (s *ServiceImpl) Register(ctx context.Context, userEntity *entity.User) (any, error) {
 	userExist, err := s.ud.FindUserByName(ctx, userEntity.Username)
 	if err != nil {
@@ -46,7 +46,7 @@ func (s *ServiceImpl) Register(ctx context.Context, userEntity *entity.User) (an
 	if userExist.IsActive() {
 		return nil, errors.New("user exist")
 	}
-	// 创建用户
+	// 鍒涘缓鐢ㄦ埛
 	user, err := s.ud.CreateUser(ctx, userEntity)
 	if err != nil {
 		return nil, err
@@ -55,20 +55,20 @@ func (s *ServiceImpl) Register(ctx context.Context, userEntity *entity.User) (an
 	return RegisterResponse(user), nil
 }
 
-// Login 用户登陆
+// Login 鐢ㄦ埛鐧婚檰
 func (s *ServiceImpl) Login(ctx context.Context, entity *entity.User) (any, error) {
 	user, err := s.ud.FindUserByName(ctx, entity.Username)
 	if err != nil {
 		return nil, err
 	}
 
-	// 检查密码
+	// 妫€鏌ュ瘑鐮?
 	err = s.ud.CheckUserPwd(ctx, user, entity.Password)
 	if err != nil {
 		return nil, errors.New("invalid password")
 	}
 
-	// 生成token
+	// 鐢熸垚token
 	token, err := s.tokenService.GenerateToken(ctx, user.ID, user.Username)
 	if err != nil {
 		return nil, err

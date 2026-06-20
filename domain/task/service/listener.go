@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/CocaineCong/todolist-ddd/domain/event"
-	userevent "github.com/CocaineCong/todolist-ddd/domain/user/event"
+	"github.com/Y1le/gotolist/domain/event"
+	userevent "github.com/Y1le/gotolist/domain/user/event"
 )
 
 func (t *TaskDomainImpl) OnUserRenamed(ctx context.Context, e event.Event) error {
