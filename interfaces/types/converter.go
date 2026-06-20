@@ -1,8 +1,8 @@
 package types
 
 import (
-	"github.com/CocaineCong/todolist-ddd/domain/task/entity"
-	ue "github.com/CocaineCong/todolist-ddd/domain/user/entity"
+	"github.com/Y1le/godolist/domain/task/entity"
+	ue "github.com/Y1le/godolist/domain/user/entity"
 )
 
 func Entity2TaskResp(task *entity.Task) *TaskResp {

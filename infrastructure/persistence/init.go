@@ -3,10 +3,10 @@ package persistence
 import (
 	"gorm.io/gorm"
 
-	tRepo "github.com/CocaineCong/todolist-ddd/domain/task/repository"
-	uRepo "github.com/CocaineCong/todolist-ddd/domain/user/repository"
-	"github.com/CocaineCong/todolist-ddd/infrastructure/persistence/task"
-	"github.com/CocaineCong/todolist-ddd/infrastructure/persistence/user"
+	tRepo "github.com/Y1le/godolist/domain/task/repository"
+	uRepo "github.com/Y1le/godolist/domain/user/repository"
+	"github.com/Y1le/godolist/infrastructure/persistence/task"
+	"github.com/Y1le/godolist/infrastructure/persistence/user"
 )
 
 type Repositories struct {

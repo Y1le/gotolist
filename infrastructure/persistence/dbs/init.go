@@ -10,7 +10,7 @@ import (
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 
-	config "github.com/CocaineCong/todolist-ddd/conf"
+	config "github.com/Y1le/godolist/conf"
 )
 
 var DB *gorm.DB
@@ -26,23 +26,23 @@ func MySQLInit() {
 	}
 	db, err := gorm.Open(mysql.New(mysql.Config{
 		DSN:                       conn,  // DSN data source name
-		DefaultStringSize:         256,   // string 类型字段的默认长度
-		DisableDatetimePrecision:  true,  // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
-		DontSupportRenameIndex:    true,  // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
-		DontSupportRenameColumn:   true,  // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
-		SkipInitializeWithVersion: false, // 根据版本自动配置
+		DefaultStringSize:         256,   // string 绫诲瀷瀛楁鐨勯粯璁ら暱搴?
+		DisableDatetimePrecision:  true,  // 绂佺敤 datetime 绮惧害锛孧ySQL 5.6 涔嬪墠鐨勬暟鎹簱涓嶆敮鎸?
+		DontSupportRenameIndex:    true,  // 閲嶅懡鍚嶇储寮曟椂閲囩敤鍒犻櫎骞舵柊寤虹殑鏂瑰紡锛孧ySQL 5.7 涔嬪墠鐨勬暟鎹簱鍜?MariaDB 涓嶆敮鎸侀噸鍛藉悕绱㈠紩
+		DontSupportRenameColumn:   true,  // 鐢?`change` 閲嶅懡鍚嶅垪锛孧ySQL 8 涔嬪墠鐨勬暟鎹簱鍜?MariaDB 涓嶆敮鎸侀噸鍛藉悕鍒?
+		SkipInitializeWithVersion: false, // 鏍规嵁鐗堟湰鑷姩閰嶇疆
 	}), &gorm.Config{
-		Logger: ormLogger, // 打印日志
+		Logger: ormLogger, // 鎵撳嵃鏃ュ織
 		NamingStrategy: schema.NamingStrategy{
-			SingularTable: true, // 表明不加s
+			SingularTable: true, // 琛ㄦ槑涓嶅姞s
 		},
 	})
 	if err != nil {
 		panic(err)
 	}
 	sqlDB, _ := db.DB()
-	sqlDB.SetMaxIdleConns(20)  // 设置连接池，空闲
-	sqlDB.SetMaxOpenConns(100) // 打开
+	sqlDB.SetMaxIdleConns(20)  // 璁剧疆杩炴帴姹狅紝绌洪棽
+	sqlDB.SetMaxOpenConns(100) // 鎵撳紑
 	sqlDB.SetConnMaxLifetime(time.Second * 30)
 	DB = db
 	migration()

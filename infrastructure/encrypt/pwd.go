@@ -3,14 +3,14 @@ package encrypt
 import (
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/CocaineCong/todolist-ddd/domain/user/repository"
+	"github.com/Y1le/godolist/domain/user/repository"
 )
 
 type PwdEncryptService struct {
 }
 
 const (
-	PassWordCost = 12 // 密码加密难度
+	PassWordCost = 12 // 瀵嗙爜鍔犲瘑闅惧害
 )
 
 func NewPwdEncryptService() repository.PwdEncrypt {
